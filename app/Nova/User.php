@@ -97,6 +97,8 @@ class User extends Resource
 				'fields' => [
 					HasMany::make(__('Orders'), 'payouts', Payout::class),
 					HasMany::make(__('Fines'), 'fines', Fine::class),
+					HasMany::make(__('Bonuse'), 'bonuses', Bonuse::class),
+					HasMany::make(__('Gift'), 'gifts', Gift::class),
 					Text::make(__('Total'), fn () => $this->payouts->reduce(fn ($key, $payout) => $payout->price * $payout->share / 100, 0)),
 				],
 			]),

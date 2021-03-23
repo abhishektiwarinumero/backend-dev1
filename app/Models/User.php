@@ -81,6 +81,22 @@ class User extends Authenticatable
 		}
 	}
 
+	public function bonuses()
+	{
+		if ($this->hasRole('Superadmin')) {
+			return $this->hasMany(Bonuse::class, 'user_id');
+		}
+	}
+
+	public function gifts()
+	{
+		if ($this->hasRole('Superadmin')) {
+			return $this->hasMany(Gift::class, 'user_id');
+		}
+	}
+
+
+
 	public function games()
 	{
 		return $this->belongsToMany(Game::class, 'booster_game', 'booster_id', 'game_id');
