@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\{Gate, Route};
 use App\Http\Controllers\Nova\LoginController;
 use Mirovit\NovaNotifications\NovaNotifications;
 use Laravel\Nova\{Nova, NovaApplicationServiceProvider};
-use App\Nova\{Application, Booster, Coupon, Fine, Gift, Order, User,Bonuse};
 use Vyuldashev\NovaPermission\{NovaPermissionTool, Permission, Role};
 use DigitalCreative\CollapsibleResourceManager\CollapsibleResourceManager;
+use App\Nova\{Application, Bonuse, Booster, Coupon, Fine, Gift, Order, User};
 use DigitalCreative\CollapsibleResourceManager\Resources\{InternalLink, NovaResource, TopLevelResource};
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
