@@ -57,7 +57,7 @@ class OrderPolicy
 	 */
 	public function update(User $user, Order $order): bool
 	{
-		return $user->hasRole('Admin');
+		return $user->hasRole('Admin') ||$user->hasRole('Superadmin') ;
 	}
 
 	/**

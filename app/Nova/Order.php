@@ -139,7 +139,7 @@ class Order extends Resource
 				'completed' => __('Complete'),
 				'paid' => __('Paid'),
 			])->displayUsingLabels()
-				->canSee(fn ($request) => $request->user()->hasRole('Admin'))
+				->canSee(fn ($request) => $request->user()->hasRole('Admin') || $request->user()->hasRole('Superadmin'))
 				->hideFromIndex(),
 			// Order details in colored pills
 			Tags::make(__("Order details"), 'options')
@@ -158,7 +158,7 @@ class Order extends Resource
 			Text::make(__('Price'), 'price')
 				->displayUsing(fn ($price) => '$' . $price)
 				->hideFromDetail()
-				->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+				->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin')),
 			Text::make(__('Price'), fn () => $this->price * $this->share / 100)
 				->displayUsing(fn ($price) => '$' . $price)
 				->hideFromDetail()
@@ -185,9 +185,9 @@ class Order extends Resource
 				->canSee(fn ($request) => $request->user()->hasRole('Booster') && $this->status == 'pending'),
 			Number::make(__('Share'), 'share')
 				->displayUsing(fn ($share) => '%' . $share)
-				->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+				->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin')),
 			Text::make(__('Champion'), 'champion'),
-			Text::make('Transaction Details', fn () => "<a href='/nova-stripe/charge/{$this->transaction_id}'>{$this->transaction_id}</a>")->asHtml()->hideFromIndex()->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+			Text::make('Transaction Details', fn () => "<a href='/nova-stripe/charge/{$this->transaction_id}'>{$this->transaction_id}</a>")->asHtml()->hideFromIndex()->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin')),
 		];
 	}
 
