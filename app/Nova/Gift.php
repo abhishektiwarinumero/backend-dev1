@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\{BelongsTo, Boolean, ID, Number};
 
 class Gift extends Resource
