@@ -19,7 +19,7 @@ class CouponPolicy
 	 */
 	public function viewAny(User $user): bool
 	{
-		return $user->hasRole('Admin');
+		return $user->hasRole('Admin') ||$user->hasRole('Superadmin') ;
 	}
 
 	/**
@@ -31,7 +31,7 @@ class CouponPolicy
 	 */
 	public function view(User $user, Coupon $coupon): bool
 	{
-		return $user->hasRole('Admin');
+		return $user->hasRole('Admin') ||$user->hasRole('Superadmin') ;
 	}
 
 	/**

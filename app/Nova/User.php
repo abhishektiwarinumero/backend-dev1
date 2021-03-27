@@ -65,7 +65,7 @@ class User extends Resource
 						->rules('required', 'email', 'max:254')
 						->creationRules('unique:users,email')
 						->updateRules('unique:users,email,{{resourceId}}')
-						->readonly(fn ($req) => !$req->user()->hasRole('Admin')),
+						->readonly(fn ($req) => !$req->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin') ),
 
 					Password::make('Password')
 						->onlyOnForms()
@@ -76,16 +76,16 @@ class User extends Resource
 						->readonly(fn ($request) => !$request->user()->can('Change visibility')),
 
 					MorphToMany::make('Roles', 'roles', Role::class)
-						->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+						->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin') ),
 
 					MorphToMany::make('Permissions', 'permissions', Permission::class)
-						->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+						->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin') ),
 
 					PermissionBooleanGroup::make('Permissions')
-						->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+						->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin') ),
 
 					RoleSelect::make('Role', 'roles')
-						->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+						->canSee(fn ($request) => $request->user()->hasRole('Admin')|| $request->user()->hasRole('Superadmin') ),
 				]
 			]),
 			ResourceNavigationTab::make(['label' => 'Invoices']),

@@ -25,9 +25,25 @@ class UserSeeder extends Seeder
 		$this->seedAdmin();
 		$this->seedBooster();
 		$this->seedMember();
+		$this->seedSuperAdmin();
 		foreach ($this->roles as $role => $many) {
 			$this->seedUsers($role, $many);
 		}
+	}
+
+
+
+	public function seedSuperAdmin(): void
+	{
+		User::create([
+			'username' => 'Kingboosting',
+			'first_name' => 'King',
+			'last_name' => 'Boosting',
+			'email' => 'superadmin@kingboosting.com',
+			'email_verified_at' => now(),
+			'password' => bcrypt('*iUJA2m%Ey67'),
+			'country' => 'TR',
+		])->assignRole('Superadmin');
 	}
 
 	public function seedAdmin(): void

@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\{Gate, Route};
 use App\Http\Controllers\Nova\LoginController;
 use Mirovit\NovaNotifications\NovaNotifications;
 use Laravel\Nova\{Nova, NovaApplicationServiceProvider};
-use App\Nova\{Application, Booster, Coupon, Fine, Gift, Order, User};
 use Vyuldashev\NovaPermission\{NovaPermissionTool, Permission, Role};
 use DigitalCreative\CollapsibleResourceManager\CollapsibleResourceManager;
+use App\Nova\{Application, Bonuse, Booster, Coupon, Fine, Gift, Order, User};
 use DigitalCreative\CollapsibleResourceManager\Resources\{InternalLink, NovaResource, TopLevelResource};
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -57,8 +57,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 			->middleware($middleware)
 			->prefix(Nova::path())
 			->group(function () {
-				Route::get('/login', [LoginController::class, 'showLoginForm']);
-				Route::post('/login', [LoginController::class, 'login'])->name('nova.login');
+			Route::get('/login', [LoginController::class, 'showLoginForm']);
+			Route::post('/login', [LoginController::class, 'login'])->name('nova.login');
 			});
 
 		Route::namespace('Laravel\Nova\Http\Controllers')
@@ -149,6 +149,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 							Permission::class,
 						]
 					])->canSee(fn ($request) => $request->user()->hasRole('Admin')),
+					TopLevelResource::make([
+						'label' => 'Superadmin',
+						'expanded' => false,
+						'icon' => view('nova::svg.icon-dashboard')->render(),
+						'resources' => [
+							User::class,
+							Booster::class,
+							Fine::class,
+							Application::class,
+							Gift::class,
+							Bonuse::class,
+							Coupon::class,
+							Role::class,
+							Permission::class,
+						]
+					])->canSee(fn ($request) => $request->user()->hasRole('Superadmin')),
 				],
 			]),
 			new NovaActivitylog(),
